@@ -16,9 +16,6 @@ public class GameLogic : MonoBehaviour
 
     public Text startAdvise;
 
-    [SerializeField]
-    private Button btnShop;
-
     private int LevelReached = 1;
 
     private Coroutine coFadeOut = null;
@@ -29,6 +26,11 @@ public class GameLogic : MonoBehaviour
 
     void Start()
     {
+
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+
+
         cam = Camera.main;
 
         best.text = "Best: " + PlayerPrefs.GetFloat("best", 0f).ToString("F") + "s";
@@ -108,7 +110,6 @@ public class GameLogic : MonoBehaviour
         while (startAdvise.color.a > 0)
         {
             startAdvise.color = new Color(startAdvise.color.r, startAdvise.color.g, startAdvise.color.b, startAdvise.color.a - Time.deltaTime * 2);
-            //btnShop.GetComponent<CanvasRenderer>().SetAlpha(btnShop.GetComponent<CanvasRenderer>().GetAlpha() - Time.deltaTime * 2);
             yield return null;
         }
         bFadeOut = false;
@@ -122,7 +123,6 @@ public class GameLogic : MonoBehaviour
         {
             fZwischenergebnis -= Time.deltaTime * 2;
             startAdvise.color = new Color(startAdvise.color.r, startAdvise.color.g, startAdvise.color.b, 1 - fZwischenergebnis);
-            //btnShop.GetComponent<CanvasRenderer>().SetAlpha(1 - fZwischenergebnis);
             yield return null;
         }
         bFadeIn = false;
